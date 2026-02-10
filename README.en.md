@@ -24,7 +24,7 @@ As long as you have Node.js installed, you can run it locally with no extra setu
 2. **Clone and install dependencies**
 
    ```bash
-   git clone https://github.com/your-username/web-storyboard.git
+   git clone https://github.com/Miatoo/web-storyboard.git
    cd web-storyboard
    npm install
    ```
