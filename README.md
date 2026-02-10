@@ -5,8 +5,11 @@
 
 ---
 <img width="1920" height="911" alt="image" src="https://github.com/user-attachments/assets/8cec45cc-fe17-42ad-9ef4-206c91ebbd2c" />
+
 上线网站地址：www.aitocg.cn/storyboard/
 欢迎体验
+
+
 ## 功能一览
 
 - 📝 **分镜管理**：按镜头管理 shot 列表，支持添加、复制、重排等
