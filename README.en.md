@@ -106,7 +106,6 @@ web_storyboard/
 - Zustand (state management)
 - Tailwind CSS (styling)
 
-You don’t need to know these technologies deeply just to *use* the tool. They only matter if you want to extend or customize it.
 
 ---
 
