@@ -4,6 +4,7 @@
 只要有 Node.js，就可以本地跑起来使用，不需要额外配置。
 
 ---
+<img width="1920" height="911" alt="image" src="https://github.com/user-attachments/assets/8cec45cc-fe17-42ad-9ef4-206c91ebbd2c" />
 
 ## 功能一览
 
