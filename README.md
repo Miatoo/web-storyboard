@@ -25,7 +25,7 @@
 2. **克隆并安装依赖**
 
 ```bash
-git clone https://github.com/你的用户名/web-storyboard.git
+git clone https://github.com/Miatoo/web-storyboard.git
 cd web-storyboard
 npm install
 ```
