@@ -1,0 +1,1143 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'VT323', monospace;
+  image-rendering: pixelated;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: auto;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+}
+
+#root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* 全局缩放80% - 容器设置为125%，缩放后视觉上为100% */
+  width: 125vw;
+  height: 125vh;
+  overflow: visible;
+  zoom: 0.8;
+}
+
+/* Firefox 不支持 zoom，使用 transform */
+@supports not (zoom: 0.8) {
+  #root {
+    zoom: 1;
+    transform: scale(0.8);
+    transform-origin: 0 0;
+    /* transform scale 时，容器本身已经是125%，所以内容应该是125% */
+    width: 125vw;
+    height: 125vh;
+  }
+}
+
+/* 内部内容容器也需要是125%，才能填满缩放后的空间 */
+#root > * {
+  width: 125vw;
+  height: 125vh;
+}
+
+/* 网格背景 */
+.grid-bg {
+  background-image: 
+    linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.dark .grid-bg {
+  background-image: 
+    linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+}
+
+/* 复古窗口样式 */
+.retro-window {
+  border: 2px solid black;
+  box-shadow: 3px 3px 0px rgba(0,0,0,0.2);
+  background: #ffffff;
+}
+
+.dark .retro-window {
+  border: 2px solid #ffffff;
+  box-shadow: 3px 3px 0px rgba(255,255,255,0.1);
+  background: #2a2a2a;
+}
+
+/* 复古标题栏 */
+.retro-header {
+  background: black;
+  color: white;
+  padding: 2px 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2rem;
+}
+
+.dark .retro-header {
+  background: white;
+  color: black;
+}
+
+/* 像素边框按钮 */
+.pixel-border-button {
+  border: 2px solid black;
+  box-shadow: 2px 2px 0px rgba(0,0,0,1);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.pixel-border-button:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px rgba(0,0,0,1);
+}
+
+.dark .pixel-border-button {
+  border-color: white;
+  box-shadow: 2px 2px 0px white;
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e0e0e0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #808080;
+  border: 2px solid #e0e0e0;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #333;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #666;
+  border-color: #333;
+}
+
+/* 像素图标 */
+.pixel-icon {
+  font-size: 20px;
+  width: 24px;
+  text-align: center;
+}
+
+/* ===== 风格主题 ===== */
+
+/* 复古像素风格 (默认) - 已在上面定义 */
+body.theme-retro-pixel,
+body:not([class*="theme-"]) {
+  font-family: 'VT323', monospace;
+  image-rendering: pixelated;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: auto;
+}
+
+body.theme-retro-pixel .retro-window,
+body:not([class*="theme-"]) .retro-window {
+  border: 2px solid black;
+  box-shadow: 3px 3px 0px rgba(0,0,0,0.2);
+}
+
+body.theme-retro-pixel .pixel-border-button,
+body:not([class*="theme-"]) .pixel-border-button {
+  border: 2px solid black;
+  box-shadow: 2px 2px 0px rgba(0,0,0,1);
+}
+
+body.theme-retro-pixel .pixel-border-button:active,
+body:not([class*="theme-"]) .pixel-border-button:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px rgba(0,0,0,1);
+}
+
+/* 现代简约风格 */
+body.theme-modern {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  image-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body.theme-modern .retro-window {
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+}
+
+body.theme-modern .retro-header {
+  background: linear-gradient(to right, #667eea 0%, #764ba2 100%);
+  border-radius: 6px 6px 0 0;
+  padding: 8px 12px;
+}
+
+body.theme-modern .pixel-border-button {
+  border: 1px solid #d1d5db;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+body.theme-modern .pixel-border-button:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+body.theme-modern .pixel-border-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+body.theme-modern .grid-bg {
+  background-image: none;
+  background: #f9fafb;
+}
+
+body.theme-modern.dark .grid-bg,
+.dark body.theme-modern .grid-bg {
+  background: #111827;
+}
+
+/* 经典传统风格 */
+body.theme-classic {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  image-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body.theme-classic .retro-window {
+  border: 2px solid #8b7355;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
+  background: #f4e4bc;
+  border-radius: 4px;
+}
+
+body.theme-classic .retro-header {
+  background: linear-gradient(to bottom, #6b5b3d, #4a3f29);
+  border-bottom: 2px solid #2a2419;
+  padding: 6px 10px;
+  border-radius: 2px 2px 0 0;
+  font-weight: bold;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+body.theme-classic .pixel-border-button {
+  border: 2px outset #c9a961;
+  background: #d4c5a9;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  transition: all 0.1s;
+}
+
+body.theme-classic .pixel-border-button:hover {
+  background: #e5d4b8;
+}
+
+body.theme-classic .pixel-border-button:active {
+  border-style: inset;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  transform: none;
+}
+
+body.theme-classic .grid-bg {
+  background-image: 
+    repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(139, 115, 85, 0.1) 20px, rgba(139, 115, 85, 0.1) 21px),
+    repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(139, 115, 85, 0.1) 20px, rgba(139, 115, 85, 0.1) 21px);
+  background: #f9f5e8;
+}
+
+body.theme-classic.dark .retro-window,
+.dark body.theme-classic .retro-window {
+  border-color: #6b5b3d;
+  background: #3a3429;
+}
+
+body.theme-classic.dark .grid-bg,
+.dark body.theme-classic .grid-bg {
+  background: #2a2419;
+}
+
+body.theme-classic.dark .pixel-border-button,
+.dark body.theme-classic .pixel-border-button {
+  border-color: #8b7355;
+  background: #4a3f29;
+  color: #e5d4b8;
+}
+
+body.theme-classic.dark .pixel-border-button:hover,
+.dark body.theme-classic .pixel-border-button:hover {
+  background: #5a4f39;
+}
+
+/* 复古故事风格 (Retro Story) */
+body.theme-retro-story {
+  font-family: 'Space Grotesk', sans-serif;
+  image-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f2e8d5;
+  /* 背景图已移除以避免引用个人资源，如需可自行替换为公共图片 */
+  background-image: none;
+}
+
+body.theme-retro-story::before {
+  content: '';
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.05;
+  /* 背景图已移除以避免引用个人资源，如需可自行替换为公共图片 */
+  background-image: none;
+  z-index: -1;
+}
+
+body.theme-retro-story .retro-window {
+  border: 3px solid #1a1a1a;
+  box-shadow: 6px 6px 0 0 #1a1a1a;
+  background-color: #fffcf5;
+  color: #1a1a1a; /* 确保文字是深色的 */
+}
+
+body.theme-retro-story .retro-header {
+  background: #1a1a1a;
+  color: white;
+  padding: 4px 12px;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+body.theme-retro-story .pixel-border-button {
+  border: 3px solid #1a1a1a;
+  box-shadow: 3px 3px 0 0 #1a1a1a;
+  transition: all 0.1s;
+  background: white;
+  color: #1a1a1a; /* 确保按钮文字是深色的 */
+  font-family: 'Courier Prime', monospace;
+  font-weight: 700;
+}
+
+body.theme-retro-story .pixel-border-button:active {
+  box-shadow: 0 0 0 0 #1a1a1a;
+  transform: translate(3px, 3px);
+}
+
+body.theme-retro-story .pixel-border-button:hover {
+  background: #f5c4a7;
+}
+
+body.theme-retro-story h1,
+body.theme-retro-story .font-display {
+  font-family: 'Bebas Neue', cursive;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #1a1a1a; /* 确保标题文字是深色的 */
+}
+
+/* 确保 retro-story 主题中所有文本默认是深色 */
+body.theme-retro-story {
+  color: #1a1a1a;
+}
+
+body.theme-retro-story * {
+  color: inherit; /* 继承父元素颜色，除非明确指定 */
+}
+
+/* 确保 retro-story 主题中，白色背景的元素使用深色文字 */
+body.theme-retro-story .bg-white,
+body.theme-retro-story .bg-white * {
+  color: #1a1a1a !important;
+}
+
+body.theme-retro-story .text-white.bg-white,
+body.theme-retro-story .bg-white.text-white {
+  color: #1a1a1a !important;
+}
+
+/* 确保 retro-story 主题中，深色背景的元素使用浅色文字 */
+body.theme-retro-story .bg-black,
+body.theme-retro-story .bg-primary {
+  color: white !important;
+}
+
+body.theme-retro-story .bg-black *,
+body.theme-retro-story .bg-primary * {
+  color: white !important;
+}
+
+/* 确保 retro-story 主题中，按钮文字颜色正确 */
+body.theme-retro-story .pixel-border-button.bg-white,
+body.theme-retro-story .pixel-border-button.bg-white * {
+  color: #1a1a1a !important;
+}
+
+body.theme-retro-story .pixel-border-button.bg-black,
+body.theme-retro-story .pixel-border-button.bg-primary,
+body.theme-retro-story .pixel-border-button.bg-black *,
+body.theme-retro-story .pixel-border-button.bg-primary * {
+  color: white !important;
+}
+
+/* 确保 retro-story 主题中，输入框文字颜色正确 */
+body.theme-retro-story input,
+body.theme-retro-story textarea,
+body.theme-retro-story select {
+  color: #1a1a1a !important;
+}
+
+body.theme-retro-story input.bg-white,
+body.theme-retro-story textarea.bg-white,
+body.theme-retro-story select.bg-white {
+  color: #1a1a1a !important;
+  background-color: white !important;
+}
+
+/* 复古故事主题 - 激活状态样式（使用 peach 背景配深色文字） */
+body.theme-retro-story .bg-black.text-white,
+body.theme-retro-story .bg-primary.text-white,
+body.theme-retro-story .bg-black.text-white *,
+body.theme-retro-story .bg-primary.text-white * {
+  background-color: #f5c4a7 !important; /* peach 背景 */
+  color: #1a1a1a !important; /* 深色文字 */
+}
+
+/* 覆盖 dark 模式下的激活状态，在 retro-story 主题中也使用 peach 背景 */
+/* 注意：Tailwind 的 dark: 前缀在 CSS 中需要用转义字符 */
+body.theme-retro-story [class*="dark:bg-white"][class*="dark:text-black"],
+body.theme-retro-story [class*="dark:bg-white"][class*="dark:text-black"] * {
+  background-color: #f5c4a7 !important; /* peach 背景 */
+  color: #1a1a1a !important; /* 深色文字 */
+}
+
+/* 更通用的激活状态覆盖 - 匹配任何包含 bg-black text-white 或 bg-primary text-white 的元素 */
+body.theme-retro-story [class*="bg-black"][class*="text-white"]:not(.retro-header):not(.retro-header *),
+body.theme-retro-story [class*="bg-primary"][class*="text-white"]:not(.retro-header):not(.retro-header *) {
+  background-color: #f5c4a7 !important; /* peach 背景 */
+  color: #1a1a1a !important; /* 深色文字 */
+}
+
+body.theme-retro-story [class*="bg-black"][class*="text-white"]:not(.retro-header) *,
+body.theme-retro-story [class*="bg-primary"][class*="text-white"]:not(.retro-header) * {
+  color: #1a1a1a !important; /* 深色文字 */
+}
+
+/* 针对按钮的激活状态 */
+body.theme-retro-story .pixel-border-button.bg-black.text-white,
+body.theme-retro-story .pixel-border-button.bg-primary.text-white,
+body.theme-retro-story .pixel-border-button.bg-black.text-white *,
+body.theme-retro-story .pixel-border-button.bg-primary.text-white * {
+  background-color: #f5c4a7 !important; /* peach 背景 */
+  color: #1a1a1a !important; /* 深色文字 */
+  border-color: #1a1a1a !important;
+}
+
+/* 针对卡片/列表项的激活状态 */
+body.theme-retro-story .border-primary.bg-black.text-white,
+body.theme-retro-story .border-primary.bg-black.text-white * {
+  background-color: #f5c4a7 !important; /* peach 背景 */
+  color: #1a1a1a !important; /* 深色文字 */
+  border-color: #1a1a1a !important;
+}
+
+/* ===== Shot List 样式 - 各主题统一 ===== */
+
+/* 复古像素风格 - shot list */
+body.theme-retro-pixel .sidebar-item,
+body:not([class*="theme-"]) .sidebar-item {
+  border: 2px solid black;
+  background-color: white;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.1s;
+  font-family: 'VT323', monospace;
+  color: black;
+  box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+}
+
+body.theme-retro-pixel .sidebar-item:hover,
+body:not([class*="theme-"]) .sidebar-item:hover {
+  background-color: #f0f0f0;
+  box-shadow: 3px 3px 0px rgba(0,0,0,0.2);
+}
+
+body.theme-retro-pixel .sidebar-item.active,
+body:not([class*="theme-"]) .sidebar-item.active {
+  background-color: #000000 !important;
+  color: white !important;
+  box-shadow: 1px 1px 0px rgba(0,0,0,1);
+}
+
+body.theme-retro-pixel .sidebar-item.active *,
+body:not([class*="theme-"]) .sidebar-item.active * {
+  color: white !important;
+}
+
+.dark body.theme-retro-pixel .sidebar-item,
+.dark body:not([class*="theme-"]) .sidebar-item {
+  border-color: white;
+  background-color: #2a2a2a;
+  color: white;
+}
+
+.dark body.theme-retro-pixel .sidebar-item:hover,
+.dark body:not([class*="theme-"]) .sidebar-item:hover {
+  background-color: #3a3a3a;
+}
+
+.dark body.theme-retro-pixel .sidebar-item.active,
+.dark body:not([class*="theme-"]) .sidebar-item.active {
+  background-color: white !important;
+  color: black !important;
+}
+
+.dark body.theme-retro-pixel .sidebar-item.active *,
+.dark body:not([class*="theme-"]) .sidebar-item.active * {
+  color: black !important;
+}
+
+/* 现代风格 - shot list */
+body.theme-modern .sidebar-item {
+  border: 1px solid #e5e7eb;
+  background-color: white;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 8px;
+  color: #1f2937;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+body.theme-modern .sidebar-item:hover {
+  background-color: #f9fafb;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+body.theme-modern .sidebar-item.active {
+  background: linear-gradient(to right, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  border-color: #667eea;
+  box-shadow: 0 4px 6px -1px rgba(102, 126, 234, 0.3), 0 2px 4px -1px rgba(102, 126, 234, 0.2);
+}
+
+body.theme-modern .sidebar-item.active * {
+  color: white !important;
+}
+
+.dark body.theme-modern .sidebar-item {
+  border-color: #374151;
+  background-color: #1f2937;
+  color: #f9fafb;
+}
+
+.dark body.theme-modern .sidebar-item:hover {
+  background-color: #374151;
+}
+
+.dark body.theme-modern .sidebar-item.active {
+  background: linear-gradient(to right, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+}
+
+/* 经典传统风格 - shot list */
+body.theme-classic .sidebar-item {
+  border: 2px solid #8b7355;
+  background-color: #f4e4bc;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.1s;
+  border-radius: 4px;
+  color: #2a2419;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+body.theme-classic .sidebar-item:hover {
+  background-color: #e5d4b8;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+body.theme-classic .sidebar-item.active {
+  background: linear-gradient(to bottom, #c9a961, #b8944f) !important;
+  color: #2a2419 !important;
+  border-color: #6b5b3d;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  font-weight: bold;
+}
+
+body.theme-classic .sidebar-item.active * {
+  color: #2a2419 !important;
+}
+
+.dark body.theme-classic .sidebar-item {
+  border-color: #6b5b3d;
+  background-color: #3a3429;
+  color: #e5d4b8;
+}
+
+.dark body.theme-classic .sidebar-item:hover {
+  background-color: #4a3f29;
+}
+
+.dark body.theme-classic .sidebar-item.active {
+  background: linear-gradient(to bottom, #8b7355, #6b5b3d) !important;
+  color: #e5d4b8 !important;
+}
+
+.dark body.theme-classic .sidebar-item.active * {
+  color: #e5d4b8 !important;
+}
+
+/* 复古故事风格 - shot list */
+body.theme-retro-story .sidebar-item {
+  border: 2px solid #1a1a1a;
+  background-color: white;
+  padding: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-family: 'Space Grotesk', sans-serif;
+  color: #1a1a1a;
+}
+
+body.theme-retro-story .sidebar-item:hover {
+  background-color: rgba(245, 196, 167, 0.3); /* peach 背景，30% 透明度 */
+}
+
+body.theme-retro-story .sidebar-item.active {
+  background-color: #f5c4a7 !important; /* peach 背景 */
+  color: #1a1a1a !important;
+}
+
+body.theme-retro-story .sidebar-item.active * {
+  color: #1a1a1a !important;
+}
+
+.dark body.theme-retro-story .sidebar-item {
+  border-color: #f2e8d5;
+  background-color: #2a2a2a;
+  color: #f2e8d5;
+}
+
+.dark body.theme-retro-story .sidebar-item:hover {
+  background-color: #3a3a3a;
+}
+
+.dark body.theme-retro-story .sidebar-item.active {
+  background-color: #f5c4a7 !important;
+  color: #1a1a1a !important;
+}
+
+.dark body.theme-retro-story .sidebar-item.active * {
+  color: #1a1a1a !important;
+}
+
+/* ===== 沙漠幻境玻璃风格 (Desert Mirage Glass) ===== */
+body.theme-desert-mirage {
+  font-family: 'Inter', sans-serif;
+  image-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: white;
+  position: relative;
+}
+
+/* 背景图片作为伪元素，不影响布局 */
+body.theme-desert-mirage::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://images.unsplash.com/photo-1473580044384-7ba9967e16a0?q=80&w=2070&auto=format&fit=crop') no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* 玻璃面板效果 */
+body.theme-desert-mirage .glass-panel {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+body.theme-desert-mirage .glass-pill {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+body.theme-desert-mirage .retro-window {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  border-radius: 1.5rem;
+  color: white;
+}
+
+body.theme-desert-mirage .retro-header {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 12px 16px;
+  border-radius: 1.5rem 1.5rem 0 0;
+  color: white;
+}
+
+body.theme-desert-mirage .pixel-border-button {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 1.5rem;
+  color: white;
+  transition: all 0.3s;
+}
+
+body.theme-desert-mirage .pixel-border-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+}
+
+body.theme-desert-mirage .pixel-border-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+body.theme-desert-mirage .pixel-border-button.bg-black,
+body.theme-desert-mirage .pixel-border-button.bg-primary {
+  background: rgba(255, 255, 255, 0.9) !important;
+  color: #000000 !important;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+body.theme-desert-mirage .pixel-border-button.bg-black:hover,
+body.theme-desert-mirage .pixel-border-button.bg-primary:hover {
+  background: rgba(255, 255, 255, 1) !important;
+}
+
+body.theme-desert-mirage .grid-bg {
+  background-image: none;
+  background: transparent;
+}
+
+/* 沙漠幻境风格 - shot list */
+body.theme-desert-mirage .sidebar-item {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 1.5rem;
+  color: white;
+  font-family: 'Inter', sans-serif;
+}
+
+body.theme-desert-mirage .sidebar-item:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+  transform: translateY(-2px);
+}
+
+body.theme-desert-mirage .sidebar-item.active {
+  background: rgba(255, 255, 255, 0.35) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  color: white !important;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3), 0 8px 32px 0 rgba(0, 0, 0, 0.4) !important;
+  transform: translateY(-2px) !important;
+}
+
+body.theme-desert-mirage .sidebar-item.active * {
+  color: white !important;
+}
+
+/* 沙漠幻境风格 - 文字和字体 */
+body.theme-desert-mirage .font-display {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+body.theme-desert-mirage .font-body {
+  font-family: 'Inter', sans-serif;
+}
+
+body.theme-desert-mirage .font-serif {
+  font-family: 'Playfair Display', serif;
+}
+
+/* 沙漠幻境风格 - 背景装饰（使用 after 的兄弟选择器） */
+body.theme-desert-mirage::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.3;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(255, 165, 0, 0.4) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(135, 206, 250, 0.4) 0%, transparent 50%);
+  filter: blur(120px);
+}
+
+/* 沙漠幻境风格 - 滚动条 */
+body.theme-desert-mirage ::-webkit-scrollbar {
+  width: 4px;
+}
+
+body.theme-desert-mirage ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+body.theme-desert-mirage ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+body.theme-desert-mirage ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* 沙漠幻境风格 - 暗色模式（背景已在 ::after 中设置） */
+
+.dark body.theme-desert-mirage .glass-panel,
+.dark body.theme-desert-mirage .retro-window {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark body.theme-desert-mirage .glass-pill {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.dark body.theme-desert-mirage .sidebar-item {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark body.theme-desert-mirage .sidebar-item:hover {
+  background: rgba(0, 0, 0, 0.35);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.dark body.theme-desert-mirage .sidebar-item.active {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* ===== 液态网格玻璃风格 (Liquid Mesh Glass Workspace) ===== */
+body.theme-liquid-mesh {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  image-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: white;
+  position: relative;
+  background-color: #221a10;
+}
+
+/* 液态网格背景 */
+body.theme-liquid-mesh::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(244, 157, 37, 0.4) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(37, 99, 235, 0.4) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 1) 0%, rgba(10, 10, 10, 1) 100%);
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+/* 玻璃面板效果 */
+body.theme-liquid-mesh .glass-panel {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+body.theme-liquid-mesh .glass-pill {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+body.theme-liquid-mesh .glass-pill:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(244, 157, 37, 0.5);
+}
+
+body.theme-liquid-mesh .active-pill {
+  background: rgba(244, 157, 37, 0.2) !important;
+  border: 1px solid rgba(244, 157, 37, 0.6) !important;
+  color: #f49d25 !important;
+}
+
+body.theme-liquid-mesh .retro-window {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  border-radius: 1rem;
+  color: white;
+}
+
+body.theme-liquid-mesh .retro-header {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 12px 16px;
+  border-radius: 1rem 1rem 0 0;
+  color: white;
+}
+
+body.theme-liquid-mesh .pixel-border-button {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+body.theme-liquid-mesh .pixel-border-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(244, 157, 37, 0.5);
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+}
+
+body.theme-liquid-mesh .pixel-border-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+body.theme-liquid-mesh .pixel-border-button.bg-black,
+body.theme-liquid-mesh .pixel-border-button.bg-primary {
+  background: rgba(244, 157, 37, 0.9) !important;
+  color: #221a10 !important;
+  border-color: rgba(244, 157, 37, 0.6);
+}
+
+body.theme-liquid-mesh .pixel-border-button.bg-black:hover,
+body.theme-liquid-mesh .pixel-border-button.bg-primary:hover {
+  background: rgba(244, 157, 37, 1) !important;
+}
+
+body.theme-liquid-mesh .grid-bg {
+  background-image: none;
+  background: transparent;
+}
+
+/* 液态网格风格 - shot list */
+body.theme-liquid-mesh .sidebar-item {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 1rem;
+  color: white;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  position: relative;
+}
+
+body.theme-liquid-mesh .sidebar-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(244, 157, 37, 0.3);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+  transform: translateY(-2px);
+}
+
+body.theme-liquid-mesh .sidebar-item.active {
+  background: rgba(244, 157, 37, 0.2) !important;
+  border: 1px solid rgba(244, 157, 37, 0.6) !important;
+  color: #f49d25 !important;
+  box-shadow: 0 0 20px rgba(244, 157, 37, 0.3), 0 8px 32px 0 rgba(0, 0, 0, 0.4) !important;
+  transform: translateY(-2px) !important;
+}
+
+body.theme-liquid-mesh .sidebar-item.active * {
+  color: #f49d25 !important;
+}
+
+/* 液态网格风格 - 文字和字体 */
+body.theme-liquid-mesh .font-display {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+body.theme-liquid-mesh .font-body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* 液态网格风格 - 滚动条 */
+body.theme-liquid-mesh ::-webkit-scrollbar {
+  width: 6px;
+}
+
+body.theme-liquid-mesh ::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+body.theme-liquid-mesh ::-webkit-scrollbar-thumb {
+  background: rgba(244, 157, 37, 0.3);
+  border-radius: 10px;
+}
+
+body.theme-liquid-mesh ::-webkit-scrollbar-thumb:hover {
+  background: rgba(244, 157, 37, 0.5);
+}
+
+/* 液态网格风格 - 暗色模式（默认就是暗色） */
+.dark body.theme-liquid-mesh {
+  background-color: #221a10;
+}
+
+.dark body.theme-liquid-mesh .glass-panel,
+.dark body.theme-liquid-mesh .retro-window {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark body.theme-liquid-mesh .glass-pill {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark body.theme-liquid-mesh .sidebar-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark body.theme-liquid-mesh .sidebar-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(244, 157, 37, 0.3);
+}
+
+.dark body.theme-liquid-mesh .sidebar-item.active {
+  background: rgba(244, 157, 37, 0.2) !important;
+  border-color: rgba(244, 157, 37, 0.6) !important;
+}
+
+body.theme-retro-story .font-mono {
+  font-family: 'Courier Prime', monospace;
+}
+
+body.theme-retro-story .grid-bg {
+  background-image: none;
+  background: #fdfaf5;
+}
+
+body.theme-retro-story.dark,
+.dark body.theme-retro-story {
+  background-color: #1a1a1a;
+  color: #f2e8d5;
+}
+
+body.theme-retro-story.dark .retro-window,
+.dark body.theme-retro-story .retro-window {
+  background-color: #2a2a2a;
+  border-color: #f2e8d5;
+}
+
+body.theme-retro-story.dark .retro-header,
+.dark body.theme-retro-story .retro-header {
+  background: #f2e8d5;
+  color: #1a1a1a;
+}
+
+body.theme-retro-story.dark .pixel-border-button,
+.dark body.theme-retro-story .pixel-border-button {
+  border-color: #f2e8d5;
+  box-shadow: 3px 3px 0 0 #f2e8d5;
+  background: #2a2a2a;
+  color: #f2e8d5;
+}
+
+body.theme-retro-story.dark .pixel-border-button:hover,
+.dark body.theme-retro-story .pixel-border-button:hover {
+  background: #3a3a3a;
+}
+
+/* 复古故事风格 - 自定义滚动条 */
+body.theme-retro-story ::-webkit-scrollbar {
+  width: 12px;
+}
+
+body.theme-retro-story ::-webkit-scrollbar-track {
+  background: #f2e8d5;
+  border-left: 3px solid #1a1a1a;
+}
+
+body.theme-retro-story ::-webkit-scrollbar-thumb {
+  background: #1a1a1a;
+  border: 2px solid #f2e8d5;
+}
+
+body.theme-retro-story.dark ::-webkit-scrollbar-track,
+.dark body.theme-retro-story ::-webkit-scrollbar-track {
+  background: #2a2a2a;
+  border-left-color: #f2e8d5;
+}
+
+body.theme-retro-story.dark ::-webkit-scrollbar-thumb,
+.dark body.theme-retro-story ::-webkit-scrollbar-thumb {
+  background: #f2e8d5;
+  border-color: #2a2a2a;
+}
+
