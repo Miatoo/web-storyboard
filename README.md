@@ -4,11 +4,7 @@
 只要有 Node.js，就可以本地跑起来使用，不需要额外配置。
 
 ---
-<img width="1920" height="911" alt="image" src="https://github.com/user-attachments/assets/8cec45cc-fe17-42ad-9ef4-206c91ebbd2c" />
-
-上线网站地址：www.aitocg.cn/storyboard/
-欢迎体验
-
+更新与其他版本已移动到：https://github.com/Miatoo/Ingbord
 
 ## 功能一览
 
